@@ -1,0 +1,53 @@
+import java.util.Scanner;
+public class Test2 {
+    public static void main(String args[]) {
+       Scanner scanner = new Scanner(System.in);
+       String str = scanner.nextLine();
+       Integer nb = scanner.nextInt();
+       Integer ns = scanner.nextInt();
+       Integer nc = scanner.nextInt();
+       Integer pb = scanner.nextInt();
+       Integer ps = scanner.nextInt();
+       Integer pc = scanner.nextInt();
+       Long r = scanner.nextLong();
+       long lb = 1;
+       long ub = (long)Math.pow(10,14);
+       long maxBurgers = calcBurgers(lb, ub,str, nb, ns, nc,pb, ps, pc,r, 0);
+       System.out.println(maxBurgers);
+    }
+
+    static long calcBurgers (long lb, long ub, String s, int nb, int ns, int nc, int pb, int ps, int pc,long r,
+                            long max) {
+        if(ub >= lb) {
+            long mid = (lb+ub)/2;
+            int countB = 0;
+            int countS = 0;
+            int countC = 0;
+            for(int i=0; i<s.length(); i++) {
+                if(s.charAt(i) == 'B') {
+                    countB++;
+                } else if(s.charAt(i) == 'S') {
+                    countS++;
+                } else countC++;
+            }
+            long requiredBreads = 0;
+            if(nb < mid * countB) {
+                requiredBreads = mid * countB - nb;
+            }
+            long requiredSausages = 0;
+            if(ns < mid * countS) {
+                requiredSausages = mid * countS - ns;
+            }
+            long requiredCheese = 0;
+            if(nc < mid * countC) {
+                requiredCheese = mid * countC - nc;
+            }
+            if(requiredBreads * pb + requiredSausages * ps + requiredCheese * pc <= r) {
+                return calcBurgers(mid+1, ub,s, nb, ns, nc, pb,  ps, pc, r, mid);
+            } else {
+                return calcBurgers(lb, mid-1,s, nb, ns, nc, pb,  ps, pc, r, max);
+            }
+        }
+        return max;
+    }
+}
