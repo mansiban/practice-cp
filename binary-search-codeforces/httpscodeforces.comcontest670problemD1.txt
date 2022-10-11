@@ -1,0 +1,43 @@
+import java.util.Scanner;
+
+public class Test2 {
+    public static void main(String args[]) {
+       Scanner scanner = new Scanner(System.in);
+       Integer n = scanner.nextInt();
+       Integer k = scanner.nextInt();
+       int a[] = new int[n];
+       for(int i=0; i<n; i++) {
+         a[i] =  scanner.nextInt();
+       }
+        int b[] = new int[n];
+        for(int i=0; i<n; i++) {
+            b[i] =  scanner.nextInt();
+        }
+       int lb = 1;
+       int ub = (int)Math.pow(10,4);
+       int maxCookies = calcMagicPowder(lb, ub,n, k,a,b, 0);
+       System.out.println(maxCookies);
+    }
+
+    static int calcMagicPowder (int lb, int ub, int n, int k ,int a[] , int b[],
+                            int max) {
+        if(ub >= lb) {
+            int mid = (lb+ub)/2;
+            int requiredQty [] = new int[n];
+            int totalQty = 0;
+            for(int i=0; i<n; i++) {
+                if(mid * a[i] > b[i])
+                    requiredQty[i] = mid * a[i] - b[i] ;
+                 else
+                    requiredQty[i] = 0;
+                totalQty = totalQty + requiredQty[i];
+            }
+            if(totalQty <= k) {
+                return calcMagicPowder(mid+1, ub,n, k, a, b, mid);
+            } else {
+                return calcMagicPowder(lb, mid-1,n, k, a, b, max);
+            }
+        }
+        return max;
+    }
+}

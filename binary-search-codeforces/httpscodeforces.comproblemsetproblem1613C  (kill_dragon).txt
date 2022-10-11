@@ -1,0 +1,39 @@
+import java.util.Scanner;
+
+public class Test2 {
+    public static void main(String args[]) {
+       Scanner scanner = new Scanner(System.in);
+       int t = scanner.nextInt();
+       for(int i=0; i<t; i++) {
+           int n = scanner.nextInt();
+           long h = scanner.nextLong();
+           long a[] = new long[n];
+           for (int j = 0; j < n; j++) {
+               a[j] = scanner.nextLong();
+           }
+           long lb = 1;
+           long ub = (long) Math.pow(10, 18);
+           long minTime = minTimePoisonValid(lb, ub, n, h, a, 0);
+           System.out.println(minTime);
+       }
+    }
+
+    static long minTimePoisonValid(long lb, long ub, int n, long h, long a[], long min) {
+        if(ub >= lb) {
+            long mid = (lb+ub)/2;
+            long totalHits = 0;
+            for(int i=0; i<n; i++) {
+                if((i+1) < n && a[i+1] - a[i] < mid)
+                   totalHits = totalHits + (a[i+1] - a[i]);
+                 else
+                    totalHits = totalHits + mid;
+            }
+            if(totalHits >= h) {
+                return minTimePoisonValid(lb, mid-1,n, h, a, mid);
+            } else {
+                return minTimePoisonValid(mid+1, ub,n, h, a, min);
+            }
+        }
+        return min;
+    }
+}
