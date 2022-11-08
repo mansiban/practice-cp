@@ -1,0 +1,17 @@
+class Solution{
+    public String removeConsecutiveCharacter(String S){
+      return recurse(S, 1);
+        
+    }
+    
+    String recurse(String S, int i) {
+        if(i == S.length())
+        return S;
+        StringBuilder sb = new StringBuilder(S);
+        if(S.charAt(i-1) == S.charAt(i))
+          sb.deleteCharAt(i);
+        else 
+          i++;
+        return recurse(sb.toString(), i);
+    }
+}

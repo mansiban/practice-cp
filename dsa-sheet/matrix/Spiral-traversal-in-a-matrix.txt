@@ -1,0 +1,44 @@
+class Solution
+{
+    //Function to return a list of integers denoting spiral traversal of matrix.
+    static ArrayList<Integer> spirallyTraverse(int matrix[][], int r, int c)
+    {
+        int value = 0;
+        ArrayList<Integer> list = new ArrayList<>();
+        int j;
+        int i;
+        int flag = 0;
+        while(flag != 1) {
+        if(value >= c-value) {
+            flag = 1;
+            break;
+        }
+        for(j = value; j<c-value; j++) {
+            list.add(matrix[value][j]);
+        }
+        if(value+1 >= r-value) {
+            flag = 1;
+            break;
+        }
+        for(i=value+1; i<r-value; i++) {
+            list.add(matrix[i][c-(value+1)]);
+        }
+        if(c-(value+2) < value) {
+            flag = 1;
+            break;
+        }
+        for(j=c-(value+2); j>=value; j--) {
+            list.add(matrix[r-(value+1)][j]);
+        }
+        if(r-(value+2) <= value) {
+            flag = 1;
+            break;
+        }
+        for(i=r-(value+2); i>value; i--) {
+           list.add(matrix[i][value]); 
+        }
+        value++;
+        }
+        return list;
+    }
+}

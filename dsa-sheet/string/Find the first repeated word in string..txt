@@ -1,0 +1,31 @@
+
+class Solution
+{
+    String secFrequent(String arr[], int N)
+    {
+       Map<String, Integer> map = new HashMap<>();
+       for(int i=0; i<arr.length; i++) {
+           if(map.containsKey(arr[i])) {
+               map.put(arr[i], map.get(arr[i]) + 1);
+           } else {
+               map.put(arr[i] , 1);
+           }
+       }
+       TreeSet<Integer> set = new TreeSet<>();
+       for(Map.Entry<String, Integer> e : map.entrySet()) {
+           set.add(e.getValue());
+       }
+   
+       List<Integer> list = new ArrayList<>(set);
+       String occurence = "";
+       
+        for(Map.Entry<String, Integer> e : map.entrySet()) {
+            if(e.getValue() == list.get(list.size() - 2)) {
+                occurence = e.getKey();
+                break;
+            }
+        }
+        return occurence;
+        
+    }
+}
